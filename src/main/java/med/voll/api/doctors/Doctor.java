@@ -18,9 +18,21 @@ public class Doctor {
     private String email;
     private String crm;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Enumerated(EnumType.STRING)
     private Specialties specialties;
 
     @Embedded
     private Address address;
+
+    public Doctor(DataDoctors data) {
+        this.name = data.name();
+        this.email = data.email();
+        this.crm = data.crm();
+        this.phoneNumber = data.phoneNumber();
+        this.specialties = data.specialties();
+        this.address = new Address(data.address());
+    }
 }
