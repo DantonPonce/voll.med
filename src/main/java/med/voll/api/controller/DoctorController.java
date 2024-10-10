@@ -2,11 +2,7 @@ package med.voll.api.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import lombok.Getter;
-import med.voll.api.doctors.DataDoctors;
-import med.voll.api.doctors.DataListDoctor;
-import med.voll.api.doctors.Doctor;
-import med.voll.api.doctors.DoctorRepository;
+import med.voll.api.doctors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,13 +20,27 @@ public class DoctorController {
 
     @PostMapping
     @Transactional
-    public void register(@RequestBody @Valid DataDoctors data) {
+    public void create(@RequestBody @Valid DataCreateDoctors data) {
         System.out.println("Doctor Data: " + data);
         repository.save(new Doctor(data));
     }
 
     @GetMapping
-    public Page<DataListDoctor> listDoctors(@PageableDefault(size=10, sort={"name"}) Pageable pagination){
-        return repository.findAll(pagination).map(DataListDoctor::new);
+    public Page<DataListDoctor> list(@PageableDefault(size=10, sort={"name"}) Pageable pagination){
+        return repository.findAllByActiveTrue(pagination).map(DataListDoctor::new);
+    }
+
+    @PutMapping
+    @Transactional
+    public void update(@RequestBody @Valid DataUpdateDoctors data){
+        var doctor = repository.getReferenceById(data.id());
+        doctor.updateDataDoctor(data);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void delete(@PathVariable Long id){
+        var doctor = repository.getReferenceById(id);
+        doctor.delete();
     }
 }
