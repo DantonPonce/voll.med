@@ -1,45 +1,44 @@
-package med.voll.api.doctors;
+package med.voll.api.patients;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import med.voll.api.address.Address;
 
-@Table(name = "doctors")
-@Entity(name = "doctor")
+@Table(name = "patients")
+@Entity(name = "patient")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Doctor {
+public class Patient {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
-    private String crm;
+    private String cpf;
 
     @Column(name = "phone_number")
     private String phoneNumber;
-
-    @Enumerated(EnumType.STRING)
-    private Specialties specialties;
 
     @Embedded
     private Address address;
 
     private boolean active;
 
-    public Doctor(DataCreateDoctors data) {
+    public Patient(DataCreatePatients data) {
         this.active = true;
         this.name = data.name();
         this.email = data.email();
-        this.crm = data.crm();
+        this.cpf = data.cpf();
         this.phoneNumber = data.phoneNumber();
-        this.specialties = data.specialties();
         this.address = new Address(data.address());
     }
 
-    public void updateDataDoctor(DataDoctorUpdate data) {
+    public void updateDataPatient(DataPatientUpdate data) {
         if(data.name() != null){
             this.name = data.name();
         }
