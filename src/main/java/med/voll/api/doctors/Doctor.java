@@ -39,7 +39,7 @@ public class Doctor {
         this.address = new Address(data.address());
     }
 
-    public void updateDataDoctor(DataUpdateDoctors data) {
+    public void updateDataDoctor(DataDoctorUpdate data) {
         if(data.name() != null){
             this.name = data.name();
         }

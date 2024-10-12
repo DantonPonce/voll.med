@@ -34,4 +34,18 @@ public class Patient {
         this.phoneNumber = data.phoneNumber();
         this.address = new Address(data.address());
     }
+
+    public void updateDataPatient(DataPatientUpdate data) {
+        if(data.name() != null){
+            this.name = data.name();
+        }
+
+        if(data.phoneNumber() != null){
+            this.phoneNumber = data.phoneNumber();
+        }
+
+        if(data.address() != null){
+            this.address.updateDataAddress(data.address());
+        }
+    }
 }
