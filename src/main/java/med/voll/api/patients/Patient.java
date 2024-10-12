@@ -27,7 +27,10 @@ public class Patient {
     @Embedded
     private Address address;
 
+    private boolean active;
+
     public Patient(DataCreatePatients data) {
+        this.active = true;
         this.name = data.name();
         this.email = data.email();
         this.cpf = data.cpf();
@@ -47,5 +50,9 @@ public class Patient {
         if(data.address() != null){
             this.address.updateDataAddress(data.address());
         }
+    }
+
+    public void delete() {
+        this.active = false;
     }
 }
