@@ -1,3 +1,3 @@
-ALTER TABLE Doctors
+ALTER TABLE doctors
 ADD active tinyint;
-UPDATE Doctors SET active = 1;
+UPDATE doctors SET active = 1;
